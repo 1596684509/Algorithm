@@ -1,6 +1,7 @@
 package Algorithm;
 
-import Algo.BinarySrch.SrchTreeSampleAble;
+
+import DataStructure.Tree.SrchTreeSampleAble;
 
 public class Sample implements SrchTreeSampleAble {
 
