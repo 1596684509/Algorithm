@@ -1,10 +1,9 @@
+import Algorithm.LinkedDeQue;
 import Algorithm.Sample;
 import DataStructure.Tree.AVLTree;
 import DataStructure.Tree.RedBlackTree;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import java.awt.*;
 
 public class Main {
 
@@ -22,13 +21,19 @@ public class Main {
     @Test
     public void avl() {
 
-        for (int i = 0; i < 10000000; i++) {
+        for (int i = 0; i < 10; i++) {
 
             avlTree.add(new Sample(i));
 
         }
 
-        System.out.println(avlTree.get(new Sample(55555)).getValue());
+        avlTree.delete(new Sample(9));
+
+        for (Sample sample : avlTree) {
+            System.out.print(sample.getValue() + " ");
+        }
+
+
 
     }
 

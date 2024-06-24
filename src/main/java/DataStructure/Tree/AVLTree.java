@@ -5,6 +5,7 @@ package DataStructure.Tree;
 import Algorithm.LinkedDeQue;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Iterable<T> {
 
@@ -13,17 +14,63 @@ public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Itera
 
     @Override
     public T get(T obj) {
+
+        return Objects.requireNonNull(getSrchPathNoteArray(obj)).peekTail().value;
+
+    }
+
+    /**
+     * 使用队列头插法查找目标节点，并返回队列
+     * @param obj 目标节点
+     * @return 根节点至目标节点的节点组
+     */
+    private LinkedDeQue<Note<T>> getSrchPathNoteArray(T obj) {
+
+        LinkedDeQue<Note<T>> linkedDeQue = new LinkedDeQue<>();
+
         Note<T> current = root;
         while (current != null) {
+
             if (current.value.equals(obj)) {
-                return current.value;
+                return linkedDeQue;
             } else if (current.value.getValue() > obj.getValue()) {
                 current = current.left;
             } else {
                 current = current.right;
             }
+
+            linkedDeQue.addHead(current);
         }
         return null;
+
+    }
+
+    /**
+     * 使用队列头插法查找目标值，并返回队列
+     * @param obj 目标节点
+     * @param isQueue 是否以队列形式返回 true = 队列, false = 栈
+     * @return 根节点至目标节点的节点组
+     */
+    public LinkedDeQue<T> getSrchPathValueArray(T obj, boolean isQueue) {
+
+        LinkedDeQue<T> linkedDeQue = new LinkedDeQue<>();
+
+        for (Note<T> tNote : getSrchPathNoteArray(obj)) {
+
+            if(isQueue) {
+
+                linkedDeQue.addHead(tNote.value);
+
+            }else {
+
+                linkedDeQue.addTail(tNote.value);
+
+            }
+
+        }
+
+        return linkedDeQue;
+
     }
 
     @Override
@@ -70,10 +117,43 @@ public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Itera
         return true;
     }
 
+    /**
+     * 删除目标节点
+     * 先查找后删除
+     * @param obj
+     * @return 被删除的节点
+     */
     @Override
     public T delete(T obj) {
-        // 实现删除方法
-        return null;
+
+        LinkedDeQue<Note<T>> noteArray = getSrchPathNoteArray(obj);
+        Note<T> deleteNote = noteArray.pollTail();
+        Note<T> parentNote = noteArray.pollTail();
+
+        if(deleteNote == null) {
+
+            return null;
+
+        }else {
+
+            if(deleteNote.left == null && deleteNote.right == null) {
+
+                if(parentNote.left != null && parentNote.left.value.equals(obj)) {
+
+                    parentNote.left = null;
+
+                }else {
+
+                    parentNote.right = null;
+
+                }
+
+            }
+
+        }
+
+        return deleteNote.value;
+
     }
 
     private Note<T> rightRotate(Note<T> y) {

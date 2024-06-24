@@ -93,22 +93,22 @@ public class RedBlackTree<T extends SrchTreeSampleAble> {
 
     }
 
-    private void leftRotate(Note<T> x) {
-        Note<T> y = x.right;
-        x.right = y.left;
-        if (y.left != null) {
-            y.left.parent = x;
+    private void leftRotate(Note<T> point) {
+        Note<T> right = point.right;
+        point.right = right.left;
+        if (right.left != null) {
+            right.left.parent = point;
         }
-        y.parent = x.parent;
-        if (x.parent == null) {
-            root = y;
-        } else if (x == x.parent.left) {
-            x.parent.left = y;
+        right.parent = point.parent;
+        if (point.parent == null) {
+            root = right;
+        } else if (point == point.parent.left) {
+            point.parent.left = right;
         } else {
-            x.parent.right = y;
+            point.parent.right = right;
         }
-        y.left = x;
-        x.parent = y;
+        right.left = point;
+        point.parent = right;
     }
 
     private void rightRotate(Note<T> y) {

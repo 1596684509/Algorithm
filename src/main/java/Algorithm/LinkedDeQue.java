@@ -1,6 +1,8 @@
 package Algorithm;
 
-public class LinkedDeQue<T> {
+import java.util.Iterator;
+
+public class LinkedDeQue<T> implements Iterable<T>{
 
     private Node<T> head = new Node<>(null, null, null);
     private Node<T> tail = new Node<>(null, null, null);
@@ -10,7 +12,7 @@ public class LinkedDeQue<T> {
     /**
      * 双端队列
      * 头部添加 头部取出 为队列 FIFO
-     * 头部添加 尾部去除 为栈 FILO
+     * 头部添加 尾部取出 为栈 FILO
      */
     public LinkedDeQue() {
 
@@ -138,7 +140,25 @@ public class LinkedDeQue<T> {
 
     }
 
-    static class Node<T> {
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            Node<T> p = head.next;
+            @Override
+            public boolean hasNext() {
+                return p.next != null;
+            }
+
+            @Override
+            public T next() {
+                T v = p.value;
+                p = p.next;
+                return v;
+            }
+        };
+    }
+
+    private static class Node<T> {
 
         private T value;
         private Node<T> next;
