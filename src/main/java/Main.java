@@ -1,47 +1,47 @@
+import Algorithm.LinkedDeQue;
 import Algorithm.Sample;
 import DataStructure.Tree.AVLTree;
 import DataStructure.Tree.RedBlackTree;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
+import java.util.Random;
 
 public class Main {
 
-    static RedBlackTree<Sample> redBlackTree;
-    static AVLTree<Sample> avlTree;
+    private static AVLTree<Sample> avlTree;
+    private static int count = 10;
+    private static int objInt = 55555;
+
 
     @BeforeAll
     public static void init() {
-
-        redBlackTree = new RedBlackTree<>();
         avlTree = new AVLTree<>();
-
-    }
-
-    @Test
-    public void avl() {
-
-        for (int i = 0; i < 10000000; i++) {
-
+        for (int i = 0; i < count; i++) {
             avlTree.add(new Sample(i));
-
         }
-
-        System.out.println(avlTree.get(new Sample(55555)).getValue());
-
     }
 
+
     @Test
-    public void redBlackTree() {
+    public void test() {
 
-        for (int i = 0; i < 10000000; i++) {
+        System.out.println("广度遍历-——-——-——-——-——");
+        avlTree.breadthOrder();
+        System.out.println();
 
-            redBlackTree.add(new Sample(i));
+        System.out.println("前序遍历-——-——-——-——-——");
+        avlTree.preOrder();
+        System.out.println();
 
-        }
+        System.out.println("中序遍历-——-——-——-——-——");
+        avlTree.minOrder();
+        System.out.println();
 
-        System.out.println(redBlackTree.get(new Sample(55555)).getValue());
+        System.out.println("后序遍历-——-——-——-——-——");
+        avlTree.afterOrder();
+        System.out.println();
 
     }
 
