@@ -4,6 +4,7 @@ package DataStructure.Tree;
 
 import Algorithm.LinkedDeQue;
 
+import javax.xml.stream.XMLInputFactory;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -29,6 +30,7 @@ public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Itera
         LinkedDeQue<Note<T>> linkedDeQue = new LinkedDeQue<>();
 
         Note<T> current = root;
+        linkedDeQue.addHead(current);
         while (current != null) {
 
             if (current.value.equals(obj)) {
@@ -84,6 +86,7 @@ public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Itera
             Note<T> objPoint = root;
 
             while (true) {
+
                 compareQueues.addHead(objPoint);
 
                 if (obj.equals(objPoint.value)) {
@@ -104,15 +107,12 @@ public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Itera
                     } else {
                         objPoint = objPoint.right;
                     }
+
                 }
+
             }
 
-            while (!compareQueues.isEmply()) {
-                Note<T> adjustmentPoint = compareQueues.pollTail();
-                updateHeight(adjustmentPoint);
-                // 调整节点平衡
-                adjustNode(adjustmentPoint, compareQueues.peekTail());
-            }
+            balanceTree(compareQueues);
         }
         return true;
     }
@@ -128,7 +128,11 @@ public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Itera
 
         LinkedDeQue<Note<T>> noteArray = getSrchPathNoteArray(obj);
         Note<T> deleteNote = noteArray.pollTail();
-        Note<T> parentNote = noteArray.pollTail();
+        Note<T> parentNote = noteArray.peekTail();
+        T value = deleteNote.value;
+
+        //保存被修改的的路径
+        LinkedDeQue<Note<T>> upDateNotePath = null;
 
         if(deleteNote == null) {
 
@@ -136,23 +140,160 @@ public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Itera
 
         }else {
 
-            if(deleteNote.left == null && deleteNote.right == null) {
+            if(isLeafNote(deleteNote)) {
 
-                if(parentNote.left != null && parentNote.left.value.equals(obj)) {
+                if(deleteNote.equals(root)) {
 
-                    parentNote.left = null;
+                    clear();
 
                 }else {
 
-                    parentNote.right = null;
+                    if(parentNote.left != null && parentNote.left.equals(deleteNote)) {
+
+                        parentNote.left = null;
+
+                    }else {
+
+                        parentNote.right = null;
+
+                    }
+
+                }
+
+            }else if(deleteNote.left == null) {
+
+                upDateNotePath = getSuccessorNote(deleteNote);
+                Note<T> successorNote = upDateNotePath.pollTail();
+                Note<T> successorParent = upDateNotePath.peekTail();
+                deleteNote.value = successorNote.value;
+                if(successorParent != null) {
+
+                    successorParent.left = null;
+
+                }else {
+
+                    deleteNote.right = null;
+
+                }
+
+            }else {
+
+                upDateNotePath = getPrecursorNote(deleteNote);
+                Note<T> precursor = upDateNotePath.pollTail();
+                Note<T> precursorParent = upDateNotePath.peekTail();
+                deleteNote.value = precursor.value;
+                if(precursorParent != null) {
+
+                    precursorParent.right = null;
+
+                }else {
+
+                    deleteNote.left = null;
 
                 }
 
             }
 
+            //调整
+            if(upDateNotePath != null) {
+
+                balanceTree(upDateNotePath);
+
+            }
+
+            balanceTree(noteArray);
+
         }
 
-        return deleteNote.value;
+        return value;
+
+    }
+
+    private void balanceTree(LinkedDeQue<Note<T>> tree) {
+
+        if(tree != null) {
+
+            while(!tree.isEmply()) {
+                Note<T> adjustNode = tree.pollTail();
+                updateHeight(adjustNode);
+                adjustNode(adjustNode, tree.peekTail());
+
+            }
+
+        }
+
+    }
+
+    /**
+     * 获取前驱节点的查找路径
+     * @param p 目标节点
+     * @return 从目标节点的右节点开始到前驱节点的路径
+     */
+    private LinkedDeQue<Note<T>> getPrecursorNote(Note<T> p) {
+
+        LinkedDeQue<Note<T>> linkedDeQue = new LinkedDeQue<>();
+
+        if(p.left == null) {
+
+            return linkedDeQue;
+
+        }else {
+
+            Note<T> max = p.left;
+            linkedDeQue.addHead(max);
+
+            while(max.right != null) {
+
+                max = max.right;
+                linkedDeQue.addHead(max);
+
+            }
+
+            return linkedDeQue;
+
+        }
+
+    }
+
+    /**
+     * 获取后继节点的查找路径
+     * @param p 目标节点
+     * @return 从目标节点的右节点开始到后继节点的路径
+     */
+    private LinkedDeQue<Note<T>> getSuccessorNote(Note<T> p) {
+
+        LinkedDeQue<Note<T>> linkedDeQue = new LinkedDeQue<>();
+
+        if(p.right == null) {
+
+            return linkedDeQue;
+
+        }else {
+
+            Note<T> min = p.right;
+            linkedDeQue.addHead(min);
+
+            while(min.left != null) {
+
+                min = min.left;
+                linkedDeQue.addHead(min);
+
+            }
+
+            return linkedDeQue;
+
+        }
+
+    }
+
+    private boolean isLeafNote(Note<T> p) {
+
+        return p.right == null && p.left == null;
+    }
+
+    public void clear() {
+
+        root = null;
 
     }
 
@@ -242,6 +383,79 @@ public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Itera
         int leftH = (p.left != null) ? p.left.height : 0;
         int rightH = (p.right != null) ? p.right.height : 0;
         return leftH - rightH;
+    }
+
+
+    private void preOrder(Note<T> p) {
+
+        if(p != null) {
+
+            System.out.print(p.value.getValue() + " ");
+            preOrder(p.left);
+            preOrder(p.right);
+
+        }
+
+    }
+
+    /**
+     * 前序遍历
+     */
+    public void preOrder() {
+
+        preOrder(root);
+
+    }
+
+
+    private void midOrder(Note<T> p) {
+
+        if(p != null) {
+
+            midOrder(p.left);
+            System.out.print(p.value.getValue() + " ");
+            midOrder(p.right);
+
+        }
+
+    }
+
+    /**
+     * 前序遍历
+     */
+    public void minOrder() {
+
+        midOrder(root);
+
+    }
+
+    private void afterOrder(Note<T> p) {
+
+        if(p != null) {
+
+            afterOrder(p.left);
+            afterOrder(p.right);
+            System.out.print(p.value.getValue() + " ");
+
+        }
+
+    }
+
+    /**
+     * 前序遍历
+     */
+    public void afterOrder() {
+
+        afterOrder(root);
+
+    }
+
+    public void breadthOrder() {
+
+        for (T t : this) {
+            System.out.print(t.getValue() + " ");
+        }
+
     }
 
     @Override
