@@ -27,6 +27,8 @@ public class Main {
     @Test
     public void test() {
 
+        avlTree.delete(new Sample(3));
+
         System.out.println("广度遍历-——-——-——-——-——");
         avlTree.breadthOrder();
         System.out.println();
