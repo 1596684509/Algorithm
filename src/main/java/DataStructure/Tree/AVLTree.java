@@ -166,13 +166,30 @@ public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Itera
                 Note<T> successorNote = upDateNotePath.pollTail();
                 Note<T> successorParent = upDateNotePath.peekTail();
                 deleteNote.value = successorNote.value;
-                if(successorParent != null) {
 
-                    successorParent.left = null;
+                if(isLeafNote(successorNote)) {
+
+                    if(successorParent != null) {
+
+                        successorParent.left = null;
+
+                    }else {
+
+                        deleteNote.right = null;
+
+                    }
 
                 }else {
 
-                    deleteNote.right = null;
+                    if(successorParent != null) {
+
+                        successorParent.left = successorNote.right;
+
+                    }else {
+
+                        deleteNote.right = successorNote.right;;
+
+                    }
 
                 }
 
@@ -182,13 +199,30 @@ public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Itera
                 Note<T> precursor = upDateNotePath.pollTail();
                 Note<T> precursorParent = upDateNotePath.peekTail();
                 deleteNote.value = precursor.value;
-                if(precursorParent != null) {
 
-                    precursorParent.right = null;
+                if(isLeafNote(precursor)) {
+
+                    if(precursorParent != null) {
+
+                        precursorParent.right = null;
+
+                    }else {
+
+                        deleteNote.left = null;
+
+                    }
 
                 }else {
 
-                    deleteNote.left = null;
+                    if(precursorParent != null) {
+
+                        precursorParent.right = parentNote.left;
+
+                    }else {
+
+                        deleteNote.left = parentNote.left;
+
+                    }
 
                 }
 
