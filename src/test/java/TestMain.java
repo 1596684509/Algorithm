@@ -24,8 +24,11 @@ public class TestMain {
 
         }
 
-
         tree.breadthOrder();
+
+        for (int i = 0; i < count; i++) {
+            tree.delete(new Sample(i));
+        }
 
     }
 
