@@ -4,6 +4,14 @@ import java.util.Stack;
 
 public class E20 {
 
+    /**
+     * 使用栈FILO
+     * 遇到左括号压入栈
+     * 右括号出栈匹配
+     */
+    public E20() {
+    }
+
     public static boolean isValid(String s) {
 
         Stack<Character> linkedList = new Stack<>();
