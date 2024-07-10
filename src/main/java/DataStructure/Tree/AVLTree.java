@@ -4,7 +4,6 @@ package DataStructure.Tree;
 
 import Algorithm.LinkedDeQue;
 
-import javax.xml.stream.XMLInputFactory;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -455,9 +454,9 @@ public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Itera
     }
 
     /**
-     * 前序遍历
+     * 中序遍历
      */
-    public void minOrder() {
+    public void midOrder() {
 
         midOrder(root);
 
@@ -476,7 +475,7 @@ public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Itera
     }
 
     /**
-     * 前序遍历
+     * 后序遍历
      */
     public void afterOrder() {
 

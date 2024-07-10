@@ -13,6 +13,11 @@ public class Fibonacci {
 
     }
 
+    /**
+     * 递归求解
+     * @param x
+     * @return
+     */
     public long fibonacci(int x) {
 
         if(x == 0 || x == 1) {
@@ -30,6 +35,19 @@ public class Fibonacci {
         long he = i + y;
         intmps.put(x, he);
         return he;
+
+    }
+
+    /**
+     * 公式求解
+     * F(n) ≈ round( ((1+sqrt(5)) / 2)的 n 次方 / sqrt(5) )
+     * sqrt(5) 为黄金分割
+     * n = 第几位
+     */
+    public long fibonacci2(int x) {
+
+        double d = Math.sqrt(5);
+        return Math.round(Math.pow((1 + d) / 2, x) / d);
 
     }
 
