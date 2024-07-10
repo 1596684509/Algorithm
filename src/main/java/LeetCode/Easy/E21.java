@@ -9,6 +9,14 @@ import java.util.function.Consumer;
 
 public class E21 {
 
+
+    /**
+     * 递归
+     * 返回值小的那个节点
+     */
+    public E21() {
+    }
+
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
 
         if (list1 == null) {

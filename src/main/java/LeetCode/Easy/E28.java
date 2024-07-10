@@ -4,6 +4,12 @@ import java.lang.reflect.Parameter;
 
 public class E28 {
 
+    /**
+     * KMP
+     */
+    public E28() {
+    }
+
     public int strStr(String haystack, String needle) {
 
         KMP kmp = new KMP(haystack, needle);

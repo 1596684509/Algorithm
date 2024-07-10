@@ -7,6 +7,12 @@ import java.util.EnumSet;
 
 public class E27 {
 
+    /**
+     * 将目标数向后逐步移动直至末尾
+     */
+    public E27() {
+    }
+
     public static void main(String[] args) {
 
         int[] ins = new int[]{0,1,2,2,3,0,4,2};
