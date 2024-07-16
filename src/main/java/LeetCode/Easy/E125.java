@@ -7,7 +7,7 @@ public class E125 {
     @Test
     public void t() {
 
-        System.out.println(isPalindrome("0P"));
+        System.out.println(isPalindrome(".,"));
 
     }
 
@@ -69,7 +69,7 @@ public class E125 {
 
     public boolean isLetter(char c) {
 
-        if(c >= 97 && c <= 122) {
+        if((c >= 97 && c <= 122) || (c >= 48 && c <= 57)) {
 
             return true;
 
