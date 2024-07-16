@@ -2,7 +2,7 @@ package LeetCode.Easy;
 
 import DataStructure.ArrayList;
 import org.junit.jupiter.api.Test;
-import sun.reflect.generics.tree.Tree;
+
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
