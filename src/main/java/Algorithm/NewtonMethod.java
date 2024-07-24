@@ -7,7 +7,7 @@ public class NewtonMethod {
 
     /**
      * 牛顿法
-     * Xn+1 = Xn+(a/Xn) / 2
+     * Xn+1 = (Xn+a/Xn) / 2
      * Xn = 初始值 可以用目标值 / 2
      * a = 目标值
      */
