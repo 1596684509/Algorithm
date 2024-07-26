@@ -433,6 +433,7 @@ public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Itera
 
     /**
      * 前序遍历
+     * 中 -> 左 -> 右
      */
     public void preOrder() {
 
@@ -455,6 +456,7 @@ public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Itera
 
     /**
      * 中序遍历
+     * 左 -> 中 -> 右
      */
     public void midOrder() {
 
@@ -476,6 +478,7 @@ public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Itera
 
     /**
      * 后序遍历
+     * 左 -> 右 -> 中
      */
     public void afterOrder() {
 
