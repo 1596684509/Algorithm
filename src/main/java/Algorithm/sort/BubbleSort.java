@@ -1,4 +1,4 @@
-package Algorithm;
+package Algorithm.sort;
 
 public class BubbleSort {
 

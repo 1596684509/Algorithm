@@ -456,6 +456,7 @@ public class AVLTree<T extends SrchTreeSampleAble> implements TreeAble<T>, Itera
 
     /**
      * 中序遍历
+     * 中序遍历二叉搜索树 = 遍历有序数组
      * 左 -> 中 -> 右
      */
     public void midOrder() {
