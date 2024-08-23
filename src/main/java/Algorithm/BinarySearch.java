@@ -5,6 +5,11 @@ public class BinarySearch {
     int[] nums;
     int target;
 
+    /**
+     * 二分查找
+     * @param ints
+     * @param target
+     */
     public BinarySearch(int[] ints, int target) {
         this.nums = ints;
         this.target = target;
