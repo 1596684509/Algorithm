@@ -3,9 +3,9 @@ package LeetCode.Easy;
 import java.util.ArrayList;
 import java.util.List;
 
-public class E589 {
+public class E590 {
 
-    public List<Integer> preorder(Node root) {
+    public List<Integer> postorder(Node root) {
         List<Integer> integers = new ArrayList<>();
         order(root, integers);
         return integers;
@@ -16,12 +16,12 @@ public class E589 {
             return;
         }
 
-        list.add(root.val);
-
         // 遍历所有子节点
         for (Node child : root.children) {
             order(child, list);
         }
+
+        list.add(root.val);
     }
 
     class Node {
@@ -38,6 +38,6 @@ public class E589 {
             val = _val;
             children = _children;
         }
-    }
+    };
 
 }
