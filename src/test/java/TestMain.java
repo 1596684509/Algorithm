@@ -11,25 +11,10 @@ public class TestMain {
     public static void main(String[] args) {
 
 
-        long tag = 1;
+        int i = 44;
+        i = i & (-i);
 
-        int[] nums = {1, 0, 0, 1, 0, 1, 0 , 0, 0, 0, 1};
-
-        for (int num : nums) {
-
-            tag <<= 1;
-
-            if(num == 1) {
-
-                tag++;
-
-            }
-
-
-
-        }
-
-        System.out.println(Long.toBinaryString(tag));
+        System.out.println(i);
 
 
 
